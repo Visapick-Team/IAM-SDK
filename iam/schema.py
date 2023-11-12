@@ -13,7 +13,6 @@ class TokenBasePayload(BaseModel):
     sub: str
     azp: str
 
-    allowed_origins: Optional[list[str]] = Field(..., alias="allowed-origins")
     realm_access: RealmAccess = RealmAccess(roles=[])
     scope: Optional[str] = None
     groups: Optional[list[str]] = []

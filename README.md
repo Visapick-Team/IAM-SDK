@@ -66,6 +66,17 @@ from iam.permissions import scope_permission
 def SampleFunctionAPIView(request):
     return Response({"message": "Herkese selam"})
 ```
+# Developer Guide
+
+## Run Unittest
+
+`python3 -m unittest discover tests`
+‍‍‍
+## Run Django test
+
+`python3 manage.py test`
+
+‍‍‍‍‍
 
 # Contributors
 

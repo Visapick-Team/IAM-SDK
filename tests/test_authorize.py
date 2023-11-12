@@ -5,13 +5,16 @@ import os
 
 
 alter_token = None
+alter_token_client = None
 
 class TestAuthoriziation(TestCase):
     def setUp(self) -> None:
         self.token = os.getenv("token", alter_token)
+        self.client_token = os.getenv("client_token", alter_token_client)
         self.invalid_token = self.token[:-2] + "x"
 
         self.user = get_user(self.token)
+        self.client = get_user(self.client_token)
 
         return super().setUp()
 
@@ -49,3 +52,12 @@ class TestAuthoriziation(TestCase):
         # Authorize scopes and roles
         authorize = Authorize(scopes=scopes, roles=groups)
         authorize(self.user)
+
+    def test_client_authorization(self):
+        scopes = [":manage-users:get", ":manage-users:list"]
+
+        # Authorize only scopes
+        authorize = Authorize(scopes=scopes)
+        authorize(self.client)
+
+        print(self.client.realm_access)
