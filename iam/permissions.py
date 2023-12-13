@@ -60,6 +60,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         "retrieve": "get",
         "partial_update": "update",
         "patch": "update",
+        "update": "update",
         "destroy": "delete",
         "create": "create",
     }
@@ -158,7 +159,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         Raises:
             AssertionError: If the `action` property is not set.
         """
-        assert self._action is not None, f"{self._action} Action is not set."
+        assert not self._action, f"{self._action} Action is not set."
         return self._action
 
     def set_action(self, action):
