@@ -1,14 +1,13 @@
-from typing import Any
+import logging
 
+from typing import Any
 from django.http import HttpRequest
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.exceptions import NotAuthenticated
 from rest_framework.permissions import BasePermission
 
 from iam.exceptions import MissingValueError
 from iam.validation import get_user, Authorize
 from iam.schema import TokenPayload
-import logging
 
 logger = logging.Logger(__name__)
 
@@ -31,8 +30,7 @@ class AuthorizationBasePermission(BasePermission):
         token: str | None = token or request.COOKIES.get("Authorization", None)
 
         if not token:
-            raise MissingValueError("Token is not set", 401)
-
+            raise MissingValueError(detail="Token is not set", code=401, status_code=401)
         if token.lower().startswith("bearer"):
             token = token[7:]
 
@@ -79,7 +77,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         :rtype: object
         """
         if not self._scope:
-            raise MissingValueError("Scope is not set", 403)
+            raise MissingValueError(detail="Scope is not set", code=403, status_code=403)
         return self._scope
 
     def set_scope(self, scope) -> None:
@@ -108,7 +106,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         :rtype: str
         """
         if not self._service_name:
-            raise MissingValueError("Service name is not set", 400)
+            raise MissingValueError(detail="Service name is not set", code=400, status_code=400)
 
         return self._service_name
 
@@ -138,7 +136,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         :rtype: str
         """
         if not self._service_name:
-            raise MissingValueError("Object name is not set", 400)
+            raise MissingValueError(detail="Object name is not set", code=400, status_code=400)
         return self._object_name
 
     def set_object_name(self, object_name):
@@ -165,7 +163,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
             AssertionError: If the `action` property is not set.
         """
         if not self._action:
-            raise MissingValueError("Action is not set", 400)
+            raise MissingValueError(detail="Action is not set", code=400, status_code=400)
         return self._action
 
     def set_action(self, action):
