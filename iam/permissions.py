@@ -105,7 +105,7 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         :return: The service name.
         :rtype: str
         """
-        if not self._service_name:
+        if self._service_name == None:
             raise MissingValueError(detail="Service name is not set", code=400, status_code=400)
 
         return self._service_name
