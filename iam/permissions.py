@@ -135,8 +135,8 @@ class BaseAutoScopePermission(AuthorizationBasePermission):
         :return: A string representing the object name.
         :rtype: str
         """
-        if not self._service_name:
-            raise MissingValueError(detail="Object name is not set", code=400, status_code=400)
+        if self._service_name == None:
+            raise MissingValueError(detail="Object name is not set", code=500, status_code=500)
         return self._object_name
 
     def set_object_name(self, object_name):
