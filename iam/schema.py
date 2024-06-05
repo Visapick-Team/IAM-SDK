@@ -35,7 +35,6 @@ class UserAttributes(TokenBasePayload):
     id: Optional[UUID] = None
     given_name: Optional[str] = None
     email_verified: Optional[bool] = None
-    given_name: Optional[str] = None
     family_name: Optional[str] = None
     email: Optional[str] = None
     name: Optional[str] = None
