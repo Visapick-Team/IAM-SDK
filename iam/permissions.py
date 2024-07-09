@@ -2,10 +2,8 @@ import logging
 
 from typing import Any
 from django.http import HttpRequest
-from rest_framework.views import APIView
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import BasePermission
-
 from iam.exceptions import MissingValueError
 from iam.validation import get_user, Authorize
 from iam.schema import TokenPayload
