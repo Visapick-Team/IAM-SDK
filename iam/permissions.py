@@ -229,10 +229,24 @@ class AutoScopePermission(BaseAutoScopePermission):
 
 def scope_permission(scope: str):
     def decorator(func):
-        permission_class = AutoScopePermission()
-        permission_class.set_scope(scope=scope)
-        func.permission_classes = [permission_class]
+
+        token: str | None = func.request.headers.get("Authorization", None)
+        token: str | None = token or func.request.COOKIES.get("Authorization", None)
+
+        if not token:
+            raise MissingValueError(detail="Token is not set", code=401, status_code=401)
+        if token.lower().startswith("bearer"):
+            token = token[7:]
+
+        user =  get_user(token=token)
+
+        authorizer = Authorize(scopes=scope)
+        authorizer.authorize(user)
         return func
+    
+        # permission_class = AutoScopePermission()
+        # permission_class.set_scope(scope=scope)
+        # func.permission_classes = [permission_class]
 
     return decorator
 
