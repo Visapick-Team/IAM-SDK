@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="iam",
-    version="0.0.15",
+    version="0.0.16",
     author="VisaPick Group",
     author_email="Visapick.it@gmail.com",
     description="IAM package",
